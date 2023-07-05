@@ -1,0 +1,108 @@
+<body style="background-color: #eee;">
+    <app-navbar></app-navbar>
+    <div class="text-center py-5" id="spinner">
+        <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+        </div>
+    </div>
+    <div id="card" class="py-5 text-dark" style="display: none;">
+        <div class="container rounded pt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-1">
+                        <img class="rounded-circle mt-5" width="150px"
+                            src="{{user.pictureURL||'assets/pictures/defaultImg.png'}}" width="200" height="200" />
+                        <span class="h5 mt-3">{{fullName}}</span>
+                        <span>{{email}}</span>
+                        <h6 *ngIf="isEditing" class="mt-2">
+                            Upload a new profile picture: <br />
+                            <input type="file" class="mt-1" id="uploadPicture" (change)="selectFile($event)">
+                        </h6>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center mt-2" id="editBtn"><button class="btn btn-primary"
+                                (click)="startEditing()" type="button">Edit
+                                Profile</button></div>
+                        <div *ngIf="isEditing" class="col-md-6 text-center">
+                            <button class="btn btn-success" (click)="saveEditingChanges()" type="button">Save
+                                changes</button>
+                        </div>
+                        <div *ngIf="isEditing" class="col text-center mt-3">
+                            <button class="btn btn-info text-white" id="forgot" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">New password?</button>
+                        </div>
+                        <div *ngIf="isEditing" class="col text-center mt-3">
+                            <button class="btn btn-danger" (click)="cancel()" type="button">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Profile Settings</h4>
+                        </div>
+                        <form [formGroup]="editUserForm">
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="First name"
+                                        readonly formControlName="firstName" [value]="user.firstName" />
+                                    <div *ngIf="editUserForm.controls['firstName'].dirty && editUserForm.hasError('required', 'firstName')"
+                                        class="text-danger">*First name is required</div>
+                                    <div *ngIf="editUserForm.controls['firstName'].dirty && editUserForm.hasError('pattern', 'firstName')"
+                                        class="text-danger">*First name is invalid</div>
+                                </div>
+
+                                <div class="col-md-6"><label class="labels">Last Name</label>
+                                    <input type="text" class="form-control" formControlName="lastName" readonly
+                                        id="lastName" placeholder="Last name" [value]="user.lastName" />
+                                    <div *ngIf="editUserForm.controls['lastName'].dirty && editUserForm.hasError('required', 'lastName')"
+                                        class="text-danger">*Last name is required</div>
+                                    <div *ngIf="editUserForm.controls['lastName'].dirty && editUserForm.hasError('pattern', 'lastName')"
+                                        class="text-danger">*Last name is invalid</div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels">Website URL</label>
+                                    <input formControlName="websiteURL" type="text" class="form-control" id="websiteURL"
+                                        readonly placeholder="Website URL" [value]="user.websiteURL" />
+                                    <div *ngIf="editUserForm.controls['websiteURL'].dirty && editUserForm.hasError('required', 'websiteURL')"
+                                        class="text-danger">*Website URL is required</div>
+                                    <div *ngIf="editUserForm.controls['websiteURL'].dirty && editUserForm.hasError('pattern', 'websiteURL')"
+                                        class="text-danger">*Website URL is invalid</div>
+                                </div>
+                                <div class="col-md-6"><label class="labels">Phone number</label><input type="text"
+                                        class="form-control" id="phoneNumber" placeholder="Phone number" readonly
+                                        formControlName="phoneNumber" [value]="user.phoneNumber" />
+                                    <div *ngIf="(editUserForm.controls['phoneNumber'].dirty && editUserForm.hasError('required', 'phoneNumber'))"
+                                        class="text-danger">*Phone number is required</div>
+                                    <div *ngIf="(editUserForm.controls['phoneNumber'].dirty && editUserForm.hasError('pattern', 'phoneNumber'))"
+                                        class="text-danger">*Phone number is invalid</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" area-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title" id="exampleModalLabel"><span
+                                style="font-size: 25px;font-weight:700">Forgot
+                                your password?</span><br>
+                            <small>We will send the reset link to {{email}}. Are you sure you want to reset your
+                                email?</small>
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="closeBtn" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="button" (click)="sendConfirmEmail()" class="btn btn-success">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,43 @@
+<div id="landHodlingCarousel" class="carousel slide">
+    <div class="carousel-indicators">
+        <div *ngFor="let picture of landholdingPictures; let i = index;">
+            <button type="button" data-bs-target="#landHodlingCarousel" [attr.data-bs-slide-to]="i"
+                [ngClass]="{'active' : i == 0}" aria-current="true" [attr.aria-label]="i"
+                style="color: black;"></button>
+        </div>
+    </div>
+    <div class="carousel-inner">
+        <div class="text-center">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" id="spinner" role="status"></div>
+        </div>
+        <div *ngFor="let picture of landholdingPictures; let i = index;" class="carousel-item" [class.active]="i === 0">
+            <div class="d-flex justify-content-center align-items-center">
+                <a href="{{'/viewLandholding/' + latestLandholdings[i].id}}">
+                    <img [src]="picture" class="d-block rounded" style="max-width: 50rem; max-height: 100rem;">
+                </a>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="carousel-caption">
+                    <h3>
+                        <span class="bg-white text-dark rounded px-2">
+                            {{latestLandholdings[i].title}}, {{latestLandholdings[i].city}}
+                        </span>
+                    </h3>
+                    <p>
+                        <span class="bg-white text-dark rounded px-2">
+                            Published on: {{latestLandholdings[i].createdAt | date: 'dd/MM/yyyy'}}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#landHodlingCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#landHodlingCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>

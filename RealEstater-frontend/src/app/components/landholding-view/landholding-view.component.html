@@ -1,0 +1,118 @@
+<app-navbar></app-navbar>
+<section class="mb-2 py-5 mt-2">
+    <div class="text-center">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" id="spinner" role="status"></div>
+    </div>
+    <div class="card card-registration border-0" id="card" style="display: none; background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="mt-3 mb-3">
+                <h3 class="text-center mt-3 mb-3">{{landholding.title}}&nbsp;<i *ngIf="isActive"
+                        class="fa-solid fa-circle" style="color: #34c400d5;"></i></h3>
+                <h6 *ngIf="!isActive" class="text-danger text-center mt-3 mb-3">(the offer is currently inactive!)</h6>
+                <h6 class="text-center mt-3 mb-3">{{landholding.city}}, "{{landholding.address}}"</h6>
+                <p class="text-center mt-3 mb-3">Last updated on: {{landholding.lastUpdatedAt | date:
+                    'dd/MM/yyyy'}}</p>
+                <div class="row">
+                    <div class="col-6">
+                        <div id="landHodlingCarousel" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <div *ngFor="let picture of landholding.pictures; let i = index;">
+                                    <button type="button" data-bs-target="#landHodlingCarousel"
+                                        [attr.data-bs-slide-to]="i" [ngClass]="{'active' : i == 0}" aria-current="true"
+                                        [attr.aria-label]="i" style="color: black;"></button>
+                                </div>
+                            </div>
+                            <div class="carousel-inner">
+                                <div *ngFor="let picture of landholding.pictures; let i = index" class="carousel-item"
+                                    [class.active]="i === 0">
+                                    <img [src]="picture" class="d-block w-100 rounded" alt="...">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#landHodlingCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#landHodlingCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-5 pt-4">
+                        <div class="mt-2"><b>Estate type: </b>{{landholding.landholdingType}}</div>
+                        <div class="mt-2"><b>Built in: </b>{{landholding.yearOfConstruction}}</div>
+                        <div class="mt-2"><b>Main construction material: </b>{{landholding.constructionMaterial}}</div>
+                        <div class="mt-2"><b>Current construction stage: </b>{{landholding.constructionStage}}</div>
+                        <div class="mt-2"><b>Area: </b>{{landholding.area}} m<sup>2</sup></div>
+                        <div *ngIf="landholding.courtyard > 0" class="mt-2"><b>Courtyard: </b>{{landholding.courtyard}}
+                            m<sup>2</sup>
+                        </div>
+                        <div class="mt-2"><b>Price: </b><span class="text-success">{{landholding.price |
+                                currency:'BGN':'symbol':'1.2-2'}}</span></div>
+                        <div class="mt-2" *ngIf="landholding.floor > 0"><b>Residing on floor: </b>{{landholding.floor}}
+                        </div>
+                        <div class="mt-2" *ngIf="landholding.numberOfFloors > 0"><b>Total amount of floors:
+                            </b>{{landholding.numberOfFloors}}</div>
+                        <div class="mt-2"><b>Posted on: </b>{{landholding.createdAt | date: 'dd/MM/yyyy'}}</div>
+                        <div class="mt-2" *ngIf="landholding.features.length > 0"><b>Features: </b><span
+                                *ngFor="let feature of landholding.features; let i = index">
+                                <span *ngIf="i != landholding.features.length - 1">{{feature}}, </span>
+                                <span *ngIf="i == landholding.features.length - 1">{{feature}}.</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-1"><button class="btn btn-warning" (click)="exportToPdf()">Export to PDF</button></div>
+                </div>
+                <div class="container pt-5">
+                    <div class="row">
+                        <div class="col">
+                            <canvasjs-chart [options]="chartOptions"
+                                [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+                        </div>
+                        <div class="col">
+                            <p class="text-center pt-3">{{landholding.description}}</p>
+                            <div class="row py-4">
+                                <a class="col-md-4" href="{{'/viewProfile/' + owner.id}}">
+                                    <img src="{{owner.pictureURL}}" class="userPicture rounded">
+                                </a>
+                                <div class="col-md-8">
+                                    <h4>{{owner.firstName}} {{owner.lastName}}</h4>
+                                    <div><b>Number:</b> {{owner.phoneNumber}}</div>
+                                    <div><b>Email:</b> {{owner.email}}</div>
+                                    <button *ngIf="currentUserEmail !== owner.email" type="button"
+                                        class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                        Send message
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Send a message:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <textarea type="text" class="form-control" id="message"
+                        placeholder="Enter your message here:"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeModal" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

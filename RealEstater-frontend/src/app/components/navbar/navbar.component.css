@@ -1,0 +1,6 @@
+a:hover {
+    cursor: pointer;
+}
+.bootstrap-select.btn-group .btn .filter-option {
+    text-align: right   
+ }

@@ -1,0 +1,57 @@
+<body>
+  <header>
+    <app-navbar></app-navbar>
+  </header>
+
+  <main>
+    <section class="pb-2 pt-4">
+      <div class="container pt-4">
+        <div class="row pt-4">
+          <div class="col-md-6 col-lg-5 col-xl-4 mb-4 md-0 py-4" style="overflow-y: auto; max-height: 600px;">
+            <div class="card mb-4">
+              <div class="card-body">
+                <ul class="list-unstyled">
+                  <b *ngIf="collection.length == 0">No messages yet...</b>
+                  <li class="p-2 border-bottom mb-2 rounded" style="background-color: #eee;"
+                    *ngFor="let conversation of collection">
+                    <a class="d-flex justify-content-between" (click)="selectConversationForChatting(conversation)"
+                      style="text-decoration: none; cursor: pointer;">
+                      <div class="d-flex flex-row">
+                        <img
+                          [src]="conversation.userOneName == currentUserFullName ? conversation.pictureUserTwo : conversation.pictureUserOne"
+                          alt="avatar" class="rounded d-flex align-self-center me-3 shadow-1-strong"
+                          style="width: 80px; height: 80px;">
+                        <div class="pt-1">
+                          <p class="fw-bold mb-0">{{conversation.userOneName == currentUserFullName ?
+                            conversation.userTwoName : conversation.userOneName}}</p>
+                          <p class="small text-muted">
+                            {{ conversation.lastMessage.length >= 30 ? (conversation.lastMessage | slice:0:30) + '...' :
+                            conversation.lastMessage }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="pt-1">
+                        <p class="small text-muted mb-1">{{conversation.lastMessageSentOn | date}}</p>
+                        <div *ngIf="conversation.hasNewMessage" class="badge bg-danger">Reply needed!</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-7 col-xl-8 pb-4 pt-4">
+            <ng-container *ngIf="clickedOnSomeone">
+              <app-messages-conversation (refreshParentGrid)="handleRefreshFromChild()"></app-messages-conversation>
+            </ng-container>
+            <h3 class="text-center" *ngIf="!clickedOnSomeone">Click on someone to see the chat history!</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <app-footer></app-footer>
+  </footer>
+</body>

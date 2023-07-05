@@ -1,0 +1,142 @@
+<body style="background-color: #eee;">
+    <app-navbar></app-navbar>
+    <div class="container rounded">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm text-dark">
+                            <h4>Search results:</h4>
+                            <div class="h5"><b>{{query}}</b></div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-outline">
+                                <select class="form-select" #dropdown1 (change)="filterStage(dropdown1.value)">
+                                    <option selected disabled>Stage</option>
+                                    <option [value]="stage" *ngFor="let stage of constructionStages">
+                                        {{stage}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-outline">
+                                <select class="form-select" #dropdown2 (change)="filterCity(dropdown2.value)">
+                                    <option selected disabled>City</option>
+                                    <option [value]="city.title" *ngFor="let city of cities">
+                                        {{city.title}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-outline">
+                                <select class="form-select" #dropdown3
+                                    (change)="filterConstructionType(dropdown3.value)">
+                                    <option selected disabled>Material Type</option>
+                                    <option [value]="type" *ngFor="let type of constructionTypes">
+                                        {{type}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-outline">
+                                <select class="form-select" #dropdown4
+                                    (change)="filterLandholdingType(dropdown4.value)">
+                                    <option selected disabled>Landholding Type</option>
+                                    <option [value]="type" *ngFor="let type of landholdingTypes">
+                                        {{type}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-outline">
+                               
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-outline">
+                                
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-outline">
+                                <select class="form-select" #dropdown5 (change)="filterPrice(dropdown5.value)">
+                                    <option selected disabled>Price</option>
+                                    <option value="lowToHigh">
+                                        Low to High
+                                    </option>
+                                    <option value="highToLow">
+                                        High to Low
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-outline">
+                                <select class="form-select" #dropdown6 (change)="filterDate(dropdown6.value)">
+                                    <option selected disabled>Date</option>
+                                    <option value="oldToRecent">
+                                        Old to Recent
+                                    </option>
+                                    <option value="recentToOld">
+                                        Recent to Old
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm d-flex justify-content-center">
+                            <div class="text-dark">
+                                <button class="btn btn-danger" (click)="clearFilters()">Clear filters</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="text-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" id="spinner" role="status"></div>
+                </div>
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Date Created</th>
+                            <th>Price</th>
+                            <th>Location</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody
+                        *ngFor="let item of collection | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                        <tr>
+                            <td>{{i + 1}}</td>
+                            <td>{{item.title}}</td>
+                            <td>{{item.createdAt | date}}</td>
+                            <td>{{item.price | currency:'BGN':'symbol':'1.2-2'}}</td>
+                            <td><span><i class="fa fa-map-pin" aria-hidden="true"></i></span> {{item.city}}, {{item.address}}</td>
+                            <td>
+                                <a [routerLink]="['/viewLandholding', item.id]" class="view" title="View"
+                                    data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <pagination-controls (pageChange)="p = $event" class="text-dark"></pagination-controls>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <app-footer></app-footer>
+</body>

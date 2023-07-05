@@ -1,0 +1,68 @@
+<body style="background-color: #eee;">
+    <app-navbar></app-navbar>
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm text-dark">
+                            <h2>Landholding <b>Management</b></h2>
+                        </div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm text-dark">
+                            <button class="btn btn-primary" (click)="createNewLandholding()">Create new
+                                landholding</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" id="spinner" role="status"></div>
+                </div>
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Date Created</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody
+                        *ngFor="let item of collection | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                        <tr>
+                            <td>{{i + 1}}</td>
+                            <td>{{item.title}}</td>
+                            <td>{{item.createdAt | date}}</td>
+                            <td>{{item.price | currency:'BGN':'symbol':'1.2-2'}}</td>
+                            <td>
+                                <div *ngIf="item.isActive == true">
+                                    <div class="status text-success">&bull;</div>Active
+                                </div>
+                                <div *ngIf="item.isActive == false">
+                                    <div class="status text-danger">&bull;</div>Not Active
+                                </div>
+                            </td>
+                            <td><span class="status text-success">&bull;</span> {{item.city}}, {{item.address}}</td>
+                            <td>
+                                <a [routerLink]="['/viewLandholding', item.id]" class="view" title="View"
+                                    data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+                                <a [routerLink]="['/editLandholding', item.id]" class="settings" title="Settings"
+                                    data-toggle="tooltip"><i class="fa fa-cog"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+    <app-footer></app-footer>
+</body>

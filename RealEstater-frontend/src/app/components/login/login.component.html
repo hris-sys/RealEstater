@@ -1,0 +1,94 @@
+<section class="vh-100" style="background-color: #0D6EFD;">
+    <div class="container py-5 h-100">
+        <a href="/">
+            <i class="fa fa-arrow-circle-left" style="font-size:40px;color: white;"></i>
+        </a>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
+
+                                <form [formGroup]="loginForm">
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="../../../assets/favicon-32x32.ico" class="mr-2" />
+                                        <span class="h1 fw-bold mb-0 ml-2">&nbsp;Real Estater</span>
+                                    </div>
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account
+                                    </h5>
+
+                                    <div class="form-outline mb-4">
+                                        <input formControlName="email" type="email" id="email"
+                                            class="form-control form-control-lg" placeholder="Enter email" />
+                                        <small
+                                            *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required', 'email')"
+                                            class="text-danger">*Email is required</small>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input formControlName="password" type="password" id="password" class="form-control form-control-lg"
+                                            placeholder="Enter password" />
+                                    </div>
+
+                                    <div class="pt-1 mb-4">
+                                        <button class="btn btn-dark btn-lg btn-block" (click)="onLogin()"
+                                            type="submit">Login</button>
+                                    </div>
+                                    <div class="forgot-password">
+                                        <a class="small text-muted" id="forgot" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">Forgot password?</a>
+                                    </div>
+                                    <h6 class="mt-3 mb-5 pb-lg-2">Don't have an account?
+                                        <a href="/signUp">Register here</a>
+                                    </h6>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" area-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title" id="exampleModalLabel"><span style="font-size: 25px;font-weight:700">Forgot
+                        your password?</span><br>
+                    <small>Please provide your e-mail and we will send you a reset link!</small>
+                </p>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form [formGroup]="sendEmailForm">
+                    <div class="form-group ">
+                        <input formControlName="forgotPasswordEmail" type="text" class="form-control"
+                            id="forgotPasswordEmail" placeholder="Enter email">
+                    </div>
+                    <small
+                        *ngIf="sendEmailForm.controls['forgotPasswordEmail'].dirty && sendEmailForm.hasError('required', 'forgotPasswordEmail')"
+                        class="text-danger">*Email is required</small>
+                    <small
+                        *ngIf="sendEmailForm.controls['forgotPasswordEmail'].dirty && sendEmailForm.hasError('email', 'forgotPasswordEmail')"
+                        class="text-danger">*Email is invalid</small>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeBtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" (click)="sendConfirmEmail()" class="btn btn-success">Send</button>
+            </div>
+        </div>
+    </div>
+</div>

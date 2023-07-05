@@ -1,0 +1,49 @@
+<div class="text-center">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" id="spinner" role="status"></div>
+</div>
+<ul class="list-unstyled chat-section" style="overflow-y: auto; max-height: 450px;" #scrollContainer>
+    <ul class="list-unstyled chat-section">
+        <li *ngFor="let message of conversationData">
+            <div class="d-flex mb-4" *ngIf="message.userId != token.id">
+                <img [src]="message.userPictureURL" alt="avatar"
+                    class="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
+                    style="width: 70px; height: 70px;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between p-3">
+                        <p class="fw-bold mb-0">{{message.userFullName}}&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text-muted small mb-0"><i class="far fa-clock"></i>&nbsp;&nbsp;&nbsp;{{message.time |
+                            date}}</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            {{message.reply}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mb-4" *ngIf="message.userId == token.id">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between p-3">
+                        <p class="fw-bold mb-0">{{message.userFullName}}&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text-muted small mb-0"><i class="far fa-clock"></i>&nbsp;&nbsp;&nbsp;{{message.time |
+                            date}}</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            {{message.reply}}
+                        </p>
+                    </div>
+                </div>
+                <img [src]="message.userPictureURL" alt="avatar"
+                    class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong"
+                    style="width: 70px; height: 70px;">
+            </div>
+        </li>
+    </ul>
+</ul>
+<div class="bg-white mb-3">
+    <div class="form-outline">
+        <textarea class="form-control" id="textAreaSend" rows="4"></textarea>
+    </div>
+</div>
+<button type="button" (click)="sendMessage()" class="btn btn-info btn-rounded float-end">Send</button>

@@ -1,0 +1,281 @@
+<body>
+
+    <app-navbar></app-navbar>
+
+    <section class="mb-2 py-5 mt-2" style="background-color: #eee;">
+        <div class="card card-registration border-0" style="background-color: #eee;">
+            <div class="container py-5 h-100">
+                <h3 class="text-center mt-3">Create a new landholding</h3>
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col">
+                        <form class="col-xl-12" [formGroup]="landholdingForm">
+                            <div class="card-body p-md-4 text-black">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input formControlName="title" type="text" id="title"
+                                                class="form-control form-control-lg" />
+                                            <label class="form-label mt-1" for="title">Title</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['title'].dirty && landholdingForm.hasError('required', 'title'))"
+                                            class="text-danger">*Title is required</div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <input formControlName="yearOfConstruction" type="text" id="yearOfConstruction"
+                                            class="form-control form-control-lg" />
+                                        <label for="yearOfConstruction">Year of construction</label>
+                                        <div *ngIf="(landholdingForm.controls['yearOfConstruction'].dirty && landholdingForm.hasError('required', 'yearOfConstruction'))"
+                                            class="text-danger">*Year of construction is required</div>
+                                        <div *ngIf="landholdingForm.controls['yearOfConstruction'].dirty && landholdingForm.hasError('pattern', 'yearOfConstruction')"
+                                            class="text-danger">*Year of construction is invalid</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <div class="form-outline">
+                                                <select formControlName="city" id="town" class="form-select">
+                                                    <option value="" selected disabled>Location</option>
+                                                    <option *ngFor="let city of cities">
+                                                        {{city.title}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <label class="form-label mt-1" for="town">Town</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['city'].dirty && landholdingForm.hasError('required', 'city'))"
+                                            class="text-danger">*City is required</div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input formControlName="address" type="text" id="address"
+                                                class="form-control form-control-lg" />
+                                            <label class="form-label mt-1" for="address">Address</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['address'].dirty && landholdingForm.hasError('required', 'address'))"
+                                            class="text-danger">*Address is required</div>
+                                        <div *ngIf="landholdingForm.controls['address'].dirty && landholdingForm.hasError('pattern', 'address')"
+                                            class="text-danger">*Address is invalid</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <div class="form-outline">
+                                                <select formControlName="materialType" id="materialType"
+                                                    class="form-select">
+                                                    <option value="" selected disabled>Material</option>
+                                                    <option *ngFor="let type of constructionTypes">
+                                                        {{type}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <label class="form-label mt-1" for="materialType">Construction material
+                                                type</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['materialType'].dirty && landholdingForm.hasError('required', 'materialType'))"
+                                            class="text-danger">*Material type is required</div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <div class="form-outline">
+                                                <select formControlName="type" id="type" class="form-select">
+                                                    <option value="" selected disabled>Type</option>
+                                                    <option *ngFor="let type of landholdingTypes">
+                                                        {{type}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <label class="form-label mt-1" for="type">Landholding type</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['type'].dirty && landholdingForm.hasError('required', 'type'))"
+                                            class="text-danger">*Landholding type is required</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-4">
+                                        <div class="form-outline">
+                                            <div class="form-outline">
+                                                <select formControlName="stage" id="stage" class="form-select">
+                                                    <option value="" selected disabled>Stage</option>
+                                                    <option *ngFor="let stage of constructionStages">
+                                                        {{stage}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <label class="form-label mt-1" for="stage">Construction stage</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['stage'].dirty && landholdingForm.hasError('required', 'stage'))"
+                                            class="text-danger">*Landholding construction stage is required</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" formControlName="numberOfFloors" id="totalFloors"
+                                                class="form-control form-control-lg" min="0" />
+                                            <label class="form-label mt-1" for="totalFloors">Amount of floors <br>(leave
+                                                empty if not applicable)</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['numberOfFloors'].dirty && landholdingForm.hasError('min', 'numberOfFloors'))"
+                                            class="text-danger">*Please enter a positive number</div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" formControlName="floorOfResidence" id="floor"
+                                                class="form-control form-control-lg" min="0" />
+                                            <label class="form-label mt-1" for="floor">Floor of residence <br>(leave
+                                                empty if not applicable)</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['floorOfResidence'].dirty && landholdingForm.hasError('min', 'floorOfResidence'))"
+                                            class="text-danger">*Please enter a positive number</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" formControlName="area" id="area" min="0"
+                                                class="form-control form-control-lg" />
+                                            <label class="form-label mt-1" for="area">Area (in
+                                                m<sup>2</sup>)</label>
+                                        </div>
+                                        <div *ngIf="(landholdingForm.controls['area'].dirty && landholdingForm.hasError('required', 'area'))"
+                                            class="text-danger">*Area is required</div>
+                                        <div *ngIf="(landholdingForm.controls['area'].dirty && landholdingForm.hasError('min', 'area'))"
+                                            class="text-danger">*Please enter a positive number</div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" formControlName="courtyard" id="courtyard" min="0"
+                                                class="form-control form-control-lg" />
+                                            <label class="form-label mt-1" for="courtyard">Courtyard (in
+                                                m<sup>2</sup>)<br>(leave empty if not applicable)</label>
+                                            <div *ngIf="(landholdingForm.controls['courtyard'].dirty && landholdingForm.hasError('min', 'courtyard'))"
+                                                class="text-danger">*Please enter a positive number</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form class="col-xl-12" [formGroup]="landholdingForm">
+                            <div class="card-body p-md-4 text-black">
+                                <div class="form-outline mb-4">
+                                    <input type="number" formControlName="price" id="price" min="0"
+                                        class="form-control form-control-lg" />
+                                    <label class="form-label mt-1" for="price">Price (in BGN)</label>
+                                    <div *ngIf="(landholdingForm.controls['price'].dirty && landholdingForm.hasError('required', 'price'))"
+                                        class="text-danger">*Price is required</div>
+                                    <div *ngIf="(landholdingForm.controls['price'].dirty && landholdingForm.hasError('min', 'price'))"
+                                        class="text-danger">*Please enter a positive number</div>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <textarea class="form-control" formControlName="description"
+                                        style="height: 15rem;"></textarea>
+                                    <label class="form-label mt-1" for="description">Description</label>
+                                    <div *ngIf="(landholdingForm.controls['description'].dirty && landholdingForm.hasError('required', 'description'))"
+                                        class="text-danger">*Description is required</div>
+                                    <div *ngIf="(landholdingForm.controls['description'].dirty && (landholdingForm.hasError('minlength', 'description') || landholdingForm.hasError('maxlength', 'description')))"
+                                        class="text-danger">*Description has to be minimum of 15 characters and maximum
+                                        of 500.</div>
+                                </div>
+
+                                <div class="row d-flex h-100">
+                                    <div class="form-outline container">
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-outline">
+                                                    <select id="feature" class="form-select" (change)="addToFeatures()">
+                                                        <option selected disabled>Feature</option>
+                                                        <option *ngFor="let feature of featuresDropDownList">
+                                                            {{feature.title}}
+                                                        </option>
+                                                    </select>
+                                                    <label class="form-label mt-1" for="feature">Choose features to be
+                                                        added:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <table class="table-borderless py-1">
+                                                    <tbody>
+                                                        <tr *ngFor="let feature of featuresForLandholding">
+                                                            <td class="">{{feature}}</td>
+                                                            <td><button class="btn btn-danger"
+                                                                    (click)="removeFromFeatures(feature)">X</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center pt-3">
+                    <button type="submit" class="btn btn-info btn-lg ms-2 text-white" data-bs-toggle="modal"
+                        data-bs-target="#pictureModal">Pictures</button>
+                    <button type="submit" (click)="onSubmit()" class="btn btn-primary btn-lg ms-2">Create</button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" area-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title" id="pictureModalLabel"><span style="font-size: 25px;font-weight:700">Upload
+                            pictures</span><br>
+                        <small>Here you can add and remove pictures for your offer!</small>
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div id="landHodlingCarousel" class="carousel slide">
+                    <div class="carousel-indicators">
+                        <div *ngFor="let picture of pictures; let i = index;">
+                            <button type="button" data-bs-target="#landHodlingCarousel" [attr.data-bs-slide-to]="i"
+                                [ngClass]="{'active' : i == 0}" aria-current="true" [attr.aria-label]="i"
+                                style="color: black;"></button>
+                        </div>
+                    </div>
+                    <div class="carousel-inner">
+                        <div *ngFor="let picture of pictures; let i = index" class="carousel-item" [class.active]="i === 0">
+                            <img [src]="picture" class="d-block w-100 rounded" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#landHodlingCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#landHodlingCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-info ms-2">Upload picture: <input type="file"
+                            class="justify-content-end" multiple id="uploadPicture"
+                            (change)="selectFile($event)"></button>
+                    <button type="button" class="btn btn-danger" (click)="removePictures()">Clear pictures</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</body>

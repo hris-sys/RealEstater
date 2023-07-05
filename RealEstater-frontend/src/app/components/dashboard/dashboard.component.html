@@ -1,0 +1,39 @@
+<app-navbar></app-navbar>
+<header class="py-5" style="background-color: #0D6EFD;">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder mb-5">Check out the latest real estates!</h1>
+      <app-landholding-carousel></app-landholding-carousel>
+    </div>
+  </div>
+</header>
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div class="col mb-5" *ngFor="let landholding of latestDiscountedLandholdings">
+        <div class="card h-100">
+          <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Lower price!</div>
+          <img class="card-img-top" [src]="landholding.pictures[0]" alt="..." />
+          <div class="card-body p-4">
+            <div class="text-center">
+              <h5 class="fw-bolder">{{landholding.title}}</h5>
+              <div class="d-flex justify-content-center small text-warning mb-2">
+              </div>
+              <div class="text-muted text-decoration-line-through">
+                {{landholding.historyPrices[landholding.historyPrices.length - 2].price |
+                currency:'BGN':'symbol':'1.2-2'}}</div>
+              <div>{{landholding.historyPrices[landholding.historyPrices.length - 1].price |
+                currency:'BGN':'symbol':'1.2-2'}}</div>
+            </div>
+          </div>
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                href="{{'/viewLandholding/' + landholding.id}}">View</a></div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

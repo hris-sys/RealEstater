@@ -1,0 +1,129 @@
+<body>
+    <section style="background-color: #0D6EFD;">
+        <a class="container py-5" href="/">
+            <i class="fa fa-arrow-circle-left p-2" style="font-size:40px;color: white;"></i>
+        </a>
+        <div class="container py-3 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration" style="border-radius: 1rem;">
+                        <div class="row g-0">
+                            <div class="col-xl-6 d-none d-xl-block">
+                                <img src="../../../assets/pictures/signUpPic.jpg" class="img-fluid signUpPic" />
+                            </div>
+                            <form [formGroup]="signUpForm" class="col-xl-6">
+                                <div class="card-body p-md-4 text-black">
+                                    
+                                    <div class="d-flex align-items-center mb-5">
+                                        <img src="../../../assets/favicon-32x32.ico" class="mr-2" />
+                                        <span class="h1 fw-bold mb-0 ml-2">&nbsp;Register to our great website!</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input formControlName="firstName" type="text" id="firstName"
+                                                    class="form-control form-control-lg" />
+                                                <label class="form-label mt-1" for="firstName">First name</label>
+                                                <div *ngIf="signUpForm.controls['firstName'].dirty && signUpForm.hasError('required', 'firstName')"
+                                                    class="text-danger">*First name is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" id="lastName" formControlName="lastName"
+                                                    class="form-control form-control-lg" />
+                                                <label class="form-label mt-1" for="lastName">Last name</label>
+                                                <div *ngIf="signUpForm.controls['lastName'].dirty && signUpForm.hasError('required', 'lastName')"
+                                                    class="text-danger">*Last name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input formControlName="email" type="email" id="email"
+                                            class="form-control form-control-lg" />
+                                        <label class="form-label mt-1" for="email">Email</label>
+                                        <div *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('required', 'email')"
+                                            class="text-danger">*Email is required</div>
+                                        <div *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('email', 'email')"
+                                            class="text-danger">*Email is invalid</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <input formControlName="phoneNumber" type="text" id="phoneNumber"
+                                                class="form-control form-control-lg" />
+                                            <label class="form-label mt-1" for="phoneNumber">Phone number</label>
+                                            <div *ngIf="(signUpForm.controls['phoneNumber'].dirty && signUpForm.hasError('required', 'phoneNumber'))"
+                                                class="text-danger">*Phone number is required</div>
+                                            <div *ngIf="(signUpForm.controls['phoneNumber'].dirty && signUpForm.hasError('pattern', 'phoneNumber'))"
+                                                class="text-danger">*Phone number is invalid</div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <input formControlName="websiteURL" type="text" id="websiteURL"
+                                                class="form-control form-control-lg" />
+                                            <label class="form-label mt-1" for="websiteURL">Website URL</label>
+                                            <div *ngIf="signUpForm.controls['websiteURL'].dirty && signUpForm.hasError('required', 'websiteURL')"
+                                                class="text-danger">*Website URL is required</div>
+                                            <div *ngIf="signUpForm.controls['websiteURL'].dirty && signUpForm.hasError('pattern', 'websiteURL')"
+                                                class="text-danger">*Website URL is invalid</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-outline mb-4 container">
+                                        <div class="row">
+                                            <div class="col-11">
+                                                <input formControlName="password" [(ngModel)]="password"
+                                                    [type]="showPasswordOne ? 'text' : 'password'" id="password"
+                                                    class="form-control form-control-lg" />
+                                            </div>
+                                            <div class="col-1 d-flex align-items-center justify-content-center">
+                                                <i class="fa" [class.fa-eye-slash]="!showPasswordOne"
+                                                    [class.fa-eye]="showPasswordOne" (click)="togglePasswordOne()"></i>
+                                            </div>
+                                        </div>
+                                        <label class="form-label mt-1" for="password">Enter password</label>
+                                        <div *ngIf="signUpForm.controls['password'].dirty && signUpForm.hasError('required', 'password')"
+                                            class="text-danger">*Password is required</div>
+                                        <div *ngIf="signUpForm.controls['password'].dirty && signUpForm.hasError('pattern', 'password')"
+                                            class="text-danger">*Password should contain 8 letters, with at least a
+                                            symbol,
+                                            upper and lower case letters and a number.</div>
+                                    </div>
+
+                                    <div class="form-outline mb-4 container">
+                                        <div class="row">
+                                            <div class="col-11">
+                                                <input formControlName="confirmPassword" [(ngModel)]="confirmedPassword"
+                                                    [type]="showPasswordTwo ? 'text' : 'password'"
+                                                    class="form-control form-control-lg" id="confirmPassword" />
+                                            </div>
+                                            <div class="col-1 d-flex align-items-center justify-content-center">
+                                                <i class="fa" [class.fa-eye-slash]="!showPasswordTwo"
+                                                    [class.fa-eye]="showPasswordTwo" (click)="togglePasswordTwo()"></i>
+                                            </div>
+                                        </div>
+                                        <label class="form-label" for="confirmPassword mt-1">Confirm password</label>
+                                        <div *ngIf="(signUpForm.controls['confirmPassword'].errors?.['passwordMismatch'])"
+                                            class="text-danger">*Passwords don't match</div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center pt-3">
+                                        <button (click)="onSignup()" type="submit"
+                                            class="btn btn-primary btn-lg ms-2">Register</button>
+                                    </div>
+
+                                    <h6 class="d-flex mt-3 justify-content-center">
+                                        Already have an account?&nbsp;<a href="/login">Log in</a>
+                                    </h6>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
